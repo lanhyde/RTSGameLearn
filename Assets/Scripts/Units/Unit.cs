@@ -380,6 +380,12 @@ namespace PromiseCode.RTS.Units
             {
                 return;
             }
+
+            var mainUnit = Selection.selectedUnits[0];
+            if(!IsInMyTeam(Player.GetLocalPlayer().teamIndex) && mainUnit.data.hasAttackModule)
+            {
+
+            }
         }
     }
 }
