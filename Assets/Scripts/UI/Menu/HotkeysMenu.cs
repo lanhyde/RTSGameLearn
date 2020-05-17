@@ -38,5 +38,4 @@ namespace PromiseCode.RTS.UI.Menu
             }
         }
     }
-
 }

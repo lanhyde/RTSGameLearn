@@ -22,6 +22,7 @@ namespace PromiseCode.RTS.Controls
         {
             hotkeysInputMode = HotKeysInputType.Default;
 
+
         }
 
         // Update is called once per frame
