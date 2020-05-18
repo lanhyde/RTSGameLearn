@@ -1,4 +1,5 @@
-﻿using PromiseCode.RTS.Units;
+﻿using PromiseCode.RTS.Storing;
+using PromiseCode.RTS.Units;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,7 +127,7 @@ namespace PromiseCode.RTS
             }
             if(IsLocalPlayer())
             {
-                UICharInfo.UIController.instance.ShowDefeatScreen();
+                UI.UIController.instance.ShowDefeatScreen();
             }
         }
 

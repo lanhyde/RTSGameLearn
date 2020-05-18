@@ -319,46 +319,227 @@ namespace PromiseCode.RTS.Controls
         }
         static void OnPressMoveToBase()
         {
+            if(Player.GetLocalPlayer().playerProductionBuildings.Count < 1)
+            {
+                return;
+            }
 
+            var order = new MovePositionOrder();
+            order.movePosition = Player.GetLocalPlayer().playerProductionBuildings[0].transform.position;
+
+            selectedUnits.ForEach(unit => unit.AddOrder(order, false));
         }
         static void OnPressUseFirstAbility()
         {
+            for(int i = 0; i < selectedUnits.Count; ++i)
+            {
+                if(!selectedUnits[i])
+                {
+                    continue;
+                }
 
+                var abilitiesModule = selectedUnits[i].GetComponent<AbilitiesModule>();
+                if(abilitiesModule)
+                {
+                    var ability = abilitiesModule.GetAbilityById(0);
+                    ability?.DoAction();
+                }
+            }
         }
         static void SelectAllSameUnitsForCurrent(bool onlyOnScreen)
         {
-            
+            if(selectedUnits.Count == 0)
+            {
+                return;
+            }
+
+            var unitTypes = new List<Unit>();
+
+            for(int i = 0; i < selectedUnits.Count; ++i)
+            {
+                if(!unitTypes.Find(unitTypes => unitTypes.data == selectedUnits[i].data))
+                {
+                    unitTypes.Add(selectedUnits[i]);
+                }
+            }
+            for(int i = 0;i < unitTypes.Count; ++i)
+            {
+                SelectUnitsSameType(unitTypes[i], onlyOnScreen);
+            }
         }
         static void SelectUnitAlternative(bool focus)
         {
-
+            if(selectedUnits.Count == 0 || selectedUnits.Count > 1)
+            {
+                return;
+            }
+            SelectUnitAlternative(selectedUnits[0].data, focus);
         }
         static void SelectUnitAlternative(UnitData unitType, bool focus)
         {
+            var selectedUnit = selectedUnits[0];
+            int unitId = 0;
 
+            var unitsOfThisType = Unit.allUnits.FindAll(u => u && u.OwnerPlayerId == selectedUnit.OwnerPlayerId && u.data == selectedUnit.data);
+            for(int i = 0; i < unitsOfThisType.Count; ++i)
+            {
+                var secondUnit = unitsOfThisType[i];
+                if(unitId >= unitAlternativeNumber)
+                {
+                    OnClearSelection();
+                    OnUnitAddToSelection(secondUnit, true);
+                    unitAlternativeNumber++;
+
+                    if(focus)
+                    {
+                        GameController.instance.cameraMover.SetPosition(secondUnit.transform.position);
+                    }
+                    break;
+                }
+
+                unitId++;
+
+                if(unitAlternativeNumber >= unitId && i == unitsOfThisType.Count - 1)
+                {
+                    unitAlternativeNumber = 0;
+                    OnClearSelection();
+                    OnUnitAddToSelection(secondUnit, true);
+
+                    if(focus)
+                    {
+                        GameController.instance.cameraMover.SetPosition(secondUnit.transform.position);
+                    }
+                }
+            }
         }
         static void SelectHarvesterAlternative(bool focus)
         {
+            int unitId = 0;
+            var unitsOfThisType = Unit.allUnits.FindAll(u => u && u.OwnerPlayerId == Player.localPlayerId && u.data.isHarvester);
 
+            for(int i = 0; i < unitsOfThisType.Count; ++i)
+            {
+                var unit = unitsOfThisType[i];
+
+                if(unitId >= unitAlternativeNumber)
+                {
+                    OnClearSelection();
+                    OnUnitAddToSelection(unit, true);
+                    unitAlternativeNumber++;
+
+                    if(focus)
+                    {
+                        GameController.instance.cameraMover.SetPosition(unit.transform.position);
+                    }
+                    break;
+                }
+                unitId++;
+
+                if(unitAlternativeNumber >= unitId && i == unitsOfThisType.Count - 1)
+                {
+                    unitAlternativeNumber = 0;
+                    OnClearSelection();
+                    OnUnitAddToSelection(unit, true);
+
+                    if(focus)
+                    {
+                        GameController.instance.cameraMover.SetPosition(unit.transform.position);
+                    }
+                }
+            }
         }
         static void OnPressSelectAllUnitsOnScreen() => SelectAllUnits(true);
         static void OnPressSelectAllUnits() => SelectAllUnits(false);
 
         static void SelectAllUnits(bool onlyOnScreen = true)
         {
-
+            for(int i = 0; i < Unit.allUnits.Count; ++i)
+            {
+                var unit = Unit.allUnits[i];
+                if(!unit || unit.data.isBuilding || unit.data.isHarvester || unit.OwnerPlayerId != Player.localPlayerId)
+                {
+                    continue;
+                }
+                if(unit.IsVisibleInViewport() || !onlyOnScreen)
+                {
+                    OnUnitAddToSelection(Unit.allUnits[i]);
+                }
+            }
         }
         static void OnPressStopOrder()
         {
-
+            selectedUnits.ForEach(u => u.EndCurrentOrder());
         }
+        /// <summary>
+        /// Call this method from GameController's update
+        /// </summary>
         public static void Update()
         {
+            GroupsWork();
+            doubleClickTimer -= Time.deltaTime;
 
+            for(int i = groupsKeyTimers.Count - 1; i>= 0; --i)
+            {
+                groupsKeyTimers[i].Tick();
+
+                if(groupsKeyTimers[i].IsFinished())
+                {
+                    groupsKeyTimers.RemoveAt(i);
+                }
+            }
         }
         static void GroupsWork()
         {
+            for(int i = 0; i <= 9; ++i)
+            {
+                if (!Input.GetKeyDown(i.ToString()))
+                {
+                    continue;
+                }
+                var keyToHold = Application.isEditor ? KeyCode.LeftShift : Keymap.loadedKeymap.GetAction(KeyActionType.GroupControlsHoldKey).key;
 
+                if(Input.GetKey(keyToHold))
+                {
+                    for(int w = 0; w < Unit.allUnits.Count; ++w)
+                    {
+                        if(Unit.allUnits[w] && Unit.allUnits[w].unitSelectionGroup == i)
+                        {
+                            Unit.allUnits[w].SetUnitSelectionGroup(-1);
+                        }
+                    }
+                    for(int w = 0; w< selectedUnits.Count; ++w)
+                    {
+                        if(selectedUnits[w])
+                        {
+                            selectedUnits[w].SetUnitSelectionGroup(i);
+                        }
+                    }
+                }
+                else
+                {
+                    OnClearSelection();
+
+                    var wasFocused = false;
+                    var isKeyWasPressedNearly = groupsKeyTimers.Find(gkt => gkt.numberKeyId == i) != null;
+
+                    for(int w = 0; w < Unit.allUnits.Count; ++w)
+                    {
+                        if(Unit.allUnits[w] && Unit.allUnits[w].unitSelectionGroup == i)
+                        {
+                            if(!wasFocused && isKeyWasPressedNearly)
+                            {
+                                GameController.instance.cameraMover.SetPosition(Unit.allUnits[w].transform.position);
+                                wasFocused = true;
+                            }
+                            OnUnitAddToSelection(Unit.allUnits[w]);
+                        }
+                    }
+                    if(!isKeyWasPressedNearly)
+                    {
+                        groupsKeyTimers.Add(new KeyTimer(i));
+                    }
+                }
+            }
         }
     }
 
