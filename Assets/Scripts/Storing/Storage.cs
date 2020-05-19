@@ -52,6 +52,22 @@ namespace PromiseCode.RTS.Storing
         [Tooltip("How much player will receive for selling building (in percents of default price")]
         [Range(0, 1)] public float buildingSellReturnPercent = 0.5f;
 
+        [Header("UI Settings")]
+        [Tooltip("This parameter affects Carrier Module UI. Count of carried units icons on carrier unit healthbar will be limited with this value. 0 means no icons will be shown")]
+        [Range(0, 10)] public int carriedUnitsIconsCount = 4;
+        [Tooltip("Max count of units icons in multiselection interface panel. 0 for no limit. Note that high limit values or 0 can cause some lags on huge units count selection")]
+        [Range(0, 80)] public int unitIconsLimitInMultiSelectionUI = 20;
+
+        [Header("Game Objects")]
+        [Tooltip("Prefab of selection indicator shown on unit when unit selected. default is circle effect")]
+        public GameObject selectionIndicatorTemplate;
+        [Tooltip("Prefab of move order effect. Spawn when player clicks on map to give selected units order to move.")]
+        public GameObject moveOrderEffect;
+        [Tooltip("Prefab of attack order effect. Spawn when player clicks on enemy to give selected unit order to attack.")]
+        public GameObject attackOrderEffect;
+        [Tooltip("Prefab of repair effect. Being spawned when player click building to repair.")]
+        public GameObject repairEffectTemplate;
+
         [Header("UI Templates")]
         [Tooltip("This and other templates used by asset UI elements. Keep it default or customize if you want")]
         public GameObject unitMinimapIconTemplate;
