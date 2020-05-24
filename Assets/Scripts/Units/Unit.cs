@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using PromiseCode.RTS.Storing;
 using PromiseCode.RTS.Controls;
+using PromiseCode.RTS.UI;
 
 namespace PromiseCode.RTS.Units
 {
@@ -287,6 +288,7 @@ namespace PromiseCode.RTS.Units
         public bool IsOwnedByPlayer(int playerId) => ownerPlayerId == playerId;
         public Player GetOwnerPlayer() => Player.GetPlayerById(ownerPlayerId);
         public bool IsInMyTeam(Unit other) => GameController.instance.playersController.IsPlayersInOneTeam(ownerPlayerId, other.ownerPlayerId);
+        public bool IsInMyTeam(byte otherPlayerId) => GameController.instance.playersController.IsPlayersInOneTeam(ownerPlayerId, otherPlayerId);
         public void PlaySelectionSound() => PlayUnitSound(data.selectionSoundVariations);
         public void PlayOrderSound()
         {
@@ -384,8 +386,81 @@ namespace PromiseCode.RTS.Units
             var mainUnit = Selection.selectedUnits[0];
             if(!IsInMyTeam(Player.GetLocalPlayer().teamIndex) && mainUnit.data.hasAttackModule)
             {
+                var fowModule = GetModule<FogOfWarModule>();
 
+                if(!fowModule || fowModule.isVisibleInFOW)
+                {
+                    Cursors.SetAttackCursor();
+                }
             }
+            if(IsInMyTeam(Player.GetLocalPlayer().teamIndex) && mainUnit.data.isHarvester && data.isRefinery)
+            {
+                Cursors.SetGiveResourcesCursor();
+            }
+            if(data.canCarryUnitsCount > 0 && IsInMyTeam(Player.GetLocalPlayer().teamIndex))
+            {
+                bool anyCanBeCarries = false;
+                for(int i = 0; i < Selection.selectedUnits.Count; ++i)
+                {
+                    if(Selection.selectedUnits[i] && Selection.selectedUnits[i].data.canBeCarried)
+                    {
+                        anyCanBeCarries = true;
+                        break;
+                    }
+                }
+
+                if(anyCanBeCarries)
+                {
+                    var carryModule = GetModule<CarryModule>();
+                    if(carryModule && carryModule.CanCarryOneMoreUnit())
+                    {
+                        Cursors.SetGiveResourcesCursor();
+                    }
+                }
+            }
+        }
+
+        public void OnMouseExit()
+        {
+            isHovered = false;
+            unitUnhoveredEvent?.Invoke(this);
+
+            Cursors.SetDefaultCursor();
+        }
+
+        public bool IsUnitVisibleOnScreen()
+        {
+            return GetComponent<Renderer>().isVisible;
+        }
+
+        public bool IsVisibleInViewport()
+        {
+            var coords = GetViewportPosition(GameController.cachedMainCamera);
+            return coords.x > 0 && coords.x < 1 && coords.y > 0 && coords.y < 1;
+        }
+
+        public Vector2 GetViewportPosition(Camera forCamera)
+        {
+            return forCamera.WorldToViewportPoint(transform.position);
+        }
+
+        public void SetCarryState(bool isCarried)
+        {
+            isBeingCarried = isCarried;
+            if(isCarried)
+            {
+                Selection.UnselectUnit(this);
+            }
+            var active = !isCarried;
+
+            if(model)
+            {
+                model.SetActive(active);
+            }
+
+            GetModule<Movable>().enabled = active;
+            GetComponent<NavMeshAgent>().enabled = active;
+            GetComponent<Collider>().enabled = active;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PromiseCode.RTS.Abilities
         public Sprite icon;
         [Sound] public AudioClip soundToPlayOnUse;
         [Tooltip("Is ability can be used by default? If false, it can be enabled only from other code or ability (upgrades for example)")]
-        public bool isActiveByDeafult = true;
+        public bool isActiveByDefault = true;
         [Header("Custom weapon ability")]
         [Tooltip("Attack distance of this weapon. If set to 0, it will be default unit attack distance. Other for next same parameters.")]
         public float newAttackRange;
