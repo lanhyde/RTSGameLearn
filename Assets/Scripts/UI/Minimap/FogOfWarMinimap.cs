@@ -23,7 +23,7 @@ namespace PromiseCode.RTS.UI.Minimap
         void Awake()
         {
             Unit.unitSpawnedEvent += OnUnitSpawned;
-            Unit.unitDestroyEvent += OnUnitDestroyed;
+            Unit.unitDestroyedEvent += OnUnitDestroyed;
         }
 
         void Start()
@@ -89,7 +89,7 @@ namespace PromiseCode.RTS.UI.Minimap
         void OnDestroy()
         {
             Unit.unitSpawnedEvent -= OnUnitSpawned;
-            Unit.unitDestroyEvent -= OnUnitDestroyed;
+            Unit.unitDestroyedEvent -= OnUnitDestroyed;
         }
     }
 

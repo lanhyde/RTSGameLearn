@@ -11,7 +11,7 @@ namespace PromiseCode.RTS.Units
     public class Unit : MonoBehaviour
     {
         public static List<Unit> allUnits { get; private set; }
-        public static event UnitAction unitSpawnedEvent, unitHoveredEvent, unitUnhoveredEvent, unitDestroyEvent;
+        public static event UnitAction unitSpawnedEvent, unitHoveredEvent, unitUnhoveredEvent, unitDestroyedEvent;
         public static event UnitChangedOwnerAction unitChangedOwnerEvent;
         public event UnitOrderReceived unitReceivedOrderEvent;
 
@@ -281,7 +281,7 @@ namespace PromiseCode.RTS.Units
                 // TODO: move to destroy event?
                 GameController.instance.CheckWinConditions();
             }
-            unitDestroyEvent?.Invoke(this);
+            unitDestroyedEvent?.Invoke(this);
         }
 
         public bool HasOrders() => orders != null && orders.Count > 0;
