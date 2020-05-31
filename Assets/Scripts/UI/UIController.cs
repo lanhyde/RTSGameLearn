@@ -16,6 +16,20 @@ namespace PromiseCode.RTS.UI
 
         public Minimap.Minimap minimapComponent { get; protected set; }
         public ProductionHint productionHint { get; protected set; }
+        public SelectProductionNumberPanel selectProductionNumberPanel { get; protected set;}
+        public MinimapSignal minimapSignal {get; protected set;}
+        public CarryingUnitList carryingUnitList {get; protected set;}
+        public PauseMenu pauseMenu { get; protected set; }
+
+        SelectProductionTypePanel selectProductionTypePanel;
+
+        public Canvas MainCanvas => mainCanvas;
+
+        void Awake()
+        {
+            instance = this;
+
+        }
 
     }
 }

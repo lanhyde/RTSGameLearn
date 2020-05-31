@@ -44,7 +44,7 @@ namespace PromiseCode.RTS.Units
 
             squaredAttackDistance = selfUnit.data.attackDistance * selfUnit.data.attackDistance;
             unitLayermask = GameController.instance.MainStorage.unitLayerMask;
-            obstaclesToShootLayerMask = GameController.instance.MainStorage.obstaclesToUnitShoots;
+            obstaclesToShootLayerMask = GameController.instance.MainStorage.obstalcesToUnitShoots;
             obstaclesToShootWithoutUnitLayerMask = GameController.instance.MainStorage.obstaclesToUnitShootsWithoutUnitLayer;
         }
 
@@ -175,6 +175,16 @@ namespace PromiseCode.RTS.Units
             {
                 DoShoot();
             }
+        }
+
+        void StopAttack(bool removeTarget = false)
+        {
+            if(removeTarget)
+            {
+                attackTarget = null;
+            }
+            attackingTarget = false;
+            stopAttackEvent?.Invoke();
         }
 
         void DoShoot()

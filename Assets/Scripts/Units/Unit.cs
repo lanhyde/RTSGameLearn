@@ -376,7 +376,7 @@ namespace PromiseCode.RTS.Units
         public void OnMouseEnter()
         {
             isHovered = true;
-            unitHoveredEvent?.Invoke();
+            unitHoveredEvent?.Invoke(this);
 
             if(Selection.selectedUnits.Count == 0 || !Selection.selectedUnits[0])
             {

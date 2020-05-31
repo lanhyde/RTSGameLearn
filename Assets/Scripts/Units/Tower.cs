@@ -43,7 +43,18 @@ namespace PromiseCode.RTS.Units
 
         void RotateTower()
         {
+            if(selfUnit.attackable.attackTarget != null)
+            {
+                if(!CanRotateToTarget(selfUnit.attackable.attackTarget.transform))
+                {
+                    return;
+                }
+                Transform target = selfUnit.attackable.attackTarget.transform;
+                Vector3 targetPositionSameY = target.position;
+                targetPositionSameY.y = turretTransform.position.y;
 
+                Quaternion newRotation = Quaternion.LookRotation(targetPositionSameY - turretTransform.position);
+            }
         }
     }
 }
