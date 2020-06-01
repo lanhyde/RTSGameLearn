@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +34,7 @@ namespace PromiseCode.RTS.Controls
         float zoomValue;//缩放值
         float zoomSpeed = 30;//缩放速度
 
-        Vector2 mouseMoveCenter;//鼠标指针
+        Vector2 mouseMoveCenter;//鼠标按下的位置
         bool allowCameraRotation, allowCameraZoom;//允许相机旋转，允许相机缩放
         bool isCameraRotatingNow;//摄像机现在在旋转
 
@@ -140,7 +140,7 @@ namespace PromiseCode.RTS.Controls
 			cameraMoverTransform.position = cameraPosition;
         }
         /// <summary>
-        /// 手动旋转？
+        /// 处理旋转
         /// </summary>
         void HandleRotation()
         {
@@ -171,7 +171,7 @@ namespace PromiseCode.RTS.Controls
             }
         }
         /// <summary>
-        /// 手动缩放？
+        /// 处理缩放
         /// </summary>
         void HandleZoom()
         {
