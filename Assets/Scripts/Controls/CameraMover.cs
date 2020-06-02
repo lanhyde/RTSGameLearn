@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,46 +9,51 @@ namespace PromiseCode.RTS.Controls
         public static CameraMover sceneInstance { get; private set; }
         public enum CameraMoveType
         {
-            SpeedupFromCenter,
-            Classic
+            SpeedupFromCenter,//从中心加速？
+            Classic//经典的？
         }
 
-        [SerializeField] Transform cameraMoverTransform;
-        [SerializeField] Transform cameraTransform;
-        [SerializeField] Transform cameraDirectionsTransform;
-        [SerializeField] int startCameraHeight = 18;
+        [SerializeField] Transform cameraMoverTransform;//摄像机移动器
+        [SerializeField] Transform cameraTransform;//摄像机
+        [SerializeField] Transform cameraDirectionsTransform;//摄像机方向
+        [SerializeField] int startCameraHeight = 18;//开始 摄像机 高度
+        //工具提示：鼠标拖动屏幕“边框”的大小（像素）。在这个区域中，鼠标将在屏幕边框边移动相机。
         [Tooltip("Size of mouse drag 'borders' of screen in pixels. In this area near screen border mouse will move camera in border side.")]
-        [SerializeField] int screenBorderForMouse = 10;
+        [SerializeField] int screenBorderForMouse = 10;//鼠标屏幕边框
+        //工具提示：摄像机速度
         [Tooltip("camera speed")]
-        [SerializeField, Range(2, 30)] float cameraSensitivity = 8f;
+        //范围（2,30）
+        [SerializeField, Range(2, 30)] float cameraSensitivity = 8f;//摄像机灵敏度
         [SerializeField] CameraMoveType cameraMoveType = CameraMoveType.SpeedupFromCenter;
+        //工具提示：最大相机缩放值。大值会导致相机出现问题
         [Tooltip("Max camera zoom value. Big values can cause problems with camera")]
-        [SerializeField, Range(0, 50)] float maxZoom = 7f;
+        //范围（0,50）
+        [SerializeField, Range(0, 50)] float maxZoom = 7f;//最大缩放
 
-        Vector3 startCameraLocalPosition;
-        float zoomValue;
-        float zoomSpeed = 30;
+        Vector3 startCameraLocalPosition;//启动摄像机本地位置
+        float zoomValue;//缩放值
+        float zoomSpeed = 30;//缩放速度
 
-        Vector2 mouseMoveCenter;
-        bool allowCameraRotation, allowCameraZoom;
-        bool isCameraRotatingNow;
+        Vector2 mouseMoveCenter;//鼠标按下的位置
+        bool allowCameraRotation, allowCameraZoom;//允许相机旋转，允许相机缩放
+        bool isCameraRotatingNow;//摄像机现在在旋转
 
-        float mapSize;
+        float mapSize;//地图大小
 
-        readonly string mouseXAxisName = "Mouse X";
-        readonly string mouseScrollAxisName = "Mouse ScrollWheel";
-        readonly string terrainName = "Terrain";
+        readonly string mouseXAxisName = "Mouse X";//鼠标X轴名称
+        readonly string mouseScrollAxisName = "Mouse ScrollWheel";//鼠标滚动轴名称
+        readonly string terrainName = "Terrain";//地形名称
 
-        Camera mainCamera;
+        Camera mainCamera;//主摄像机
 
-        float cameraSensitivityForRMB, cameraSensitivityForRMBClassic;
-        Vector3 pointToRotateAround;
+        float cameraSensitivityForRMB, cameraSensitivityForRMBClassic;//摄像机灵敏度？？
+        Vector3 pointToRotateAround;//旋转点
 
         void Awake()
         {
-            mainCamera = Camera.main;
-            sceneInstance = this;
-            transform.position = new Vector3(transform.position.x, startCameraHeight, transform.position.z);
+            mainCamera = Camera.main;//初始化mian camera
+            sceneInstance = this;//单例
+            transform.position = new Vector3(transform.position.x, startCameraHeight, transform.position.z);//初始化摄像机移动器位置   高度初始化    <-- 未确定
         }
 
         void Start()
@@ -66,7 +71,9 @@ namespace PromiseCode.RTS.Controls
 
             InitializeHotkeys();
         }
-
+        /// <summary>
+        /// 初始化热键
+        /// </summary>
         void InitializeHotkeys()
         {
 
@@ -77,13 +84,15 @@ namespace PromiseCode.RTS.Controls
             HandleDefaultMovement();
             HandleZoom();
         }
-
+        /// <summary>
+        /// 处理默认移动
+        /// </summary>
         void HandleDefaultMovement()
         {
             Vector2 mousePos = Input.mousePosition;
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1))//鼠标右键 
             {
-                mouseMoveCenter = Input.mousePosition;
+                mouseMoveCenter = Input.mousePosition;//设置鼠标位置
             }
             HandleRotation();
 
@@ -130,9 +139,12 @@ namespace PromiseCode.RTS.Controls
 
 			cameraMoverTransform.position = cameraPosition;
         }
-
+        /// <summary>
+        /// 处理旋转
+        /// </summary>
         void HandleRotation()
         {
+            //旋转 中键
             if(Input.GetMouseButtonDown(2) && allowCameraRotation)
             {
                 RaycastHit hit;
@@ -158,7 +170,9 @@ namespace PromiseCode.RTS.Controls
                 isCameraRotatingNow = false;
             }
         }
-
+        /// <summary>
+        /// 处理缩放
+        /// </summary>
         void HandleZoom()
         {
             if(!allowCameraZoom)
