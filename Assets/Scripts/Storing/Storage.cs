@@ -77,7 +77,7 @@ namespace PromiseCode.RTS.Storing
         public GameObject unitProductionIconTemplate;
         public GameObject unitMultiselectionIconTemplate;
         public GameObject harvesterBarTemplate;
-        public GameObject minimapSIgnalTemplate;
+        public GameObject minimapSignalTemplate;
         public GameObject unitCarryingIcon;
         public GameObject unitAbilityIcon;
         public GameObject carryCellTemplate;
