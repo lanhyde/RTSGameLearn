@@ -28,7 +28,7 @@ namespace PromiseCode.RTS.UI.Production
         public void SelectBuildingWithNumber(int number)
         {
             List<Units.Production> playerProductions =
-                GetPlayerProductionByCategory(SelectProductionTypePanel.selectedProductionCategory);
+                GetPlayerProductionsByCategory(SelectProductionTypePanel.selectedProductionCategory);
             if (number >= playerProductions.Count)
                 return;
 
@@ -44,6 +44,50 @@ namespace PromiseCode.RTS.UI.Production
         void Redraw(ProductionCategory newCategory)
         {
             List<Units.Production> playerProductions = GetPlayerProductionsByCategory(newCategory);
+            for (int i = 0; i < buildNumberIcons.Count; ++i)
+            {
+                var buildingNumberButton = buildNumberIcons[i];
+
+                buildingNumberButton.SetupBuildingId(i);
+                buildingNumberButton.SetupWithController(this);
+
+                if (i < playerProductions.Count)
+                {
+                    buildingNumberButton.SetEnabled();
+                }
+                else
+                {
+                    buildingNumberButton.SetDisabled();
+                }
+
+                if (i == selectedBuildingNumber)
+                {
+                    buildingNumberButton.SetActive();
+                }
+                else
+                {
+                    buildingNumberButton.SetUnactive();
+                }
+            }
+        }
+
+        Units.Production GetPlayerProductionByTypeAndNumber(ProductionCategory category, int number)
+        {
+            List<Units.Production> playerProductions = GetPlayerProductionsByCategory(category);
+            return playerProductions.Count > 0 ? playerProductions[number] : null;
+        }
+
+        List<Units.Production> GetPlayerProductionsByCategory(ProductionCategory category)
+        {
+            Player localPlayer = GameController.instance.playersController.playersInGame[Player.localPlayerId];
+            List<Units.Production> playerProductions = localPlayer.GetProductionBuildingsByCategory(category);
+
+            return playerProductions;
+        }
+
+        void OnDestroy()
+        {
+            SelectProductionTypePanel.productionCategoryChanged -= OnProductionCategoryChanged;
         }
     }
 
