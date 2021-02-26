@@ -1,0 +1,27 @@
+﻿{
+  "NamingContract": {
+    "FileName": "UpperCamel",
+    "ClassName": "UpperCamel",
+    "InterfaceName": "UpperCamel",
+    "EnumName": "UpperCamel",
+    "StructName": "UpperCamel",
+    "PropertyName": "UpperCamel",
+    "PublicFieldName": "UpperCamel",
+    "ProtectedFieldName": "LowerCamel",
+    "PrivateFieldName": "LowerCamel",
+    "PublicMethodName": "UpperCamel",
+    "ProtectedMethodName": "LowerCamel",
+    "PrivateMethodName": "LowerCamel",
+    "LocalVariableName": "LowerCamel",
+    "ConstantName": "UpperCamel",
+    "ReadonlyName": "UpperCamel"
+  },
+  "ClassDeclarationSequence": [
+    "Enumeration", "Constant", "Field", "Property", "Method"
+  ],
+  "CheckHeaderComment": true,
+  "MinHeaderCommentLines": 3,
+  "IgnoreBlankBlockCheck": false,
+  "NamespaceCheck": true,
+  "ForbiddenClasses": ["UnityEngine.Time"]
+}

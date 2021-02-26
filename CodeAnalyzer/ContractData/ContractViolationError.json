@@ -1,0 +1,124 @@
+﻿{
+  "ViolationErrors": [
+    {
+      "ViolationCode": "NC01",
+      "ViolationText": "File naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "File name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC02",
+      "ViolationText": "Class naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Class name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC03",
+      "ViolationText": "Interface naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Interface name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC04",
+      "ViolationText": "Enum naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Enum name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC05",
+      "ViolationText": "Struct naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Struct name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC06",
+      "ViolationText": "Public field naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Public field name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC07",
+      "ViolationText": "Protected field naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Protected field name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC08",
+      "ViolationText": "Private field naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Private field name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC09",
+      "ViolationText": "Property naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Property name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC10",
+      "ViolationText": "Public method naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Public method name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC11",
+      "ViolationText": "Protected method naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Protected method name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC12",
+      "ViolationText": "Private method naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Private method name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC13",
+      "ViolationText": "Local variable naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Local variable name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC14",
+      "ViolationText": "Constant naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Constant name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "NC15",
+      "ViolationText": "Readonly variable naming violation",
+      "Severity": "Error",
+      "ViolationDescription": "Readonly variable name should follow {0} rule."
+    },
+    {
+      "ViolationCode": "CS01",
+      "ViolationText": "Class declaration sequence violation",
+      "Severity": "Error",
+      "ViolationDescription": "Class declaration sequence should follow this role: {0}"
+    },
+    {
+      "ViolationCode": "HC01",
+      "ViolationText": "Header comment violation",
+      "Severity": "Error",
+      "ViolationDescription": "Header comment is missing or too short."
+    },
+    {
+      "ViolationCode": "NS01",
+      "ViolationText": "namespace check violation",
+      "Severity": "Error",
+      "ViolationDescription": "Class, Struct, Interface, etc. should be declared in a namespace."
+    },
+    {
+      "ViolationCode": "BB01",
+      "ViolationText": "Blank Block violation",
+      "Severity": "Error",
+      "ViolationDescription": "Blank Block found. Please remove it or add logic"
+    },
+    {
+      "ViolationCode": "RC01",
+      "ViolationText": "Reference Class violation",
+      "Severity": "Error",
+      "ViolationDescription": "According to the coding rules, the usage of class {0} is prohibited."
+    }
+  ]
+}
