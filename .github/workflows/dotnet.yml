@@ -18,10 +18,5 @@ jobs:
       with:
         dotnet-version: 5.0.x
     
-    - name: Checkout target branch
-      uses: actions/checkout@v2
-      with: 
-        ref: ${{ github.event.pull_request.head.sha }}
-    
     - name: Execute code analysis
       run: ./CodeAnalyzer/start.sh
