@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 CODE_ANALYZER = "$(pwd -P)/CSharpCodeAnalyer5.dll"
 FILE_PATTERN = ".*(\.cs)$"
