@@ -12,7 +12,7 @@ CODE_ANALYZER="$(pwd -P)/CSharpCodeAnalyzer5.dll"
 RESULT_FILE_CACHE="$(pwd -P)/result.txt"
 RESULT=0
 DIFF=$(git_diff_with_abs_path)
-
+"git branch"
 for file in $DIFF; do
 	if [ ! -e "$CODE_ANALYZER" ]; then
 	    echo "CodeAnalyzer not exist!"
