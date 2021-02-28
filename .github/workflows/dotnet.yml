@@ -20,16 +20,19 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Check diff
-      id: git-diff
-      env:
-        EXCLUDE_OPTS: SC2086,SC2001
-      run: |
-        git config --global alias.root 'rev-parse --show-toplevel'
-        git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} \
-          --diff-filter=AM \
-          --name-only -- '*.cs'
+    # - name: Check diff
+    #   id: git-diff
+    #   env:
+    #     EXCLUDE_OPTS: SC2086,SC2001
+    #   run: |
+    #     git rev-parse --show-toplevel
+    #     git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} \
+    #       --diff-filter=AM \
+    #       --name-only -- '*.cs' \
+    #     | while read script; do \
+    #         echo $script \
+    #       done
 
 
-    # - name: Execute code analysis
-    #   run: ./CodeAnalyzer/start.sh
+    - name: Execute code analysis
+      run: ./CodeAnalyzer/start.sh
