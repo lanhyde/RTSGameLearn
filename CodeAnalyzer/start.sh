@@ -10,7 +10,7 @@ git_diff_with_abs_path() {
 }
 
 DOT_NET=$(which dotnet)
-CODE_ANALYZER="$(pwd -P)/CSharpCodeAnalyzer5.dll"
+CODE_ANALYZER="$(pwd -P)/CodeAnalyzer/CSharpCodeAnalyzer5.dll"
 RESULT_FILE_CACHE="$(pwd -P)/result.txt"
 RESULT=0
 DIFF=$(git_diff_with_abs_path)
