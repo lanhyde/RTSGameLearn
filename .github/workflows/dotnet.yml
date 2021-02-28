@@ -27,7 +27,8 @@ jobs:
       run: |
         git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} \
           --diff-filter=AM \
-          --name-only -- '*.cs'
+          --name-only -- '*.cs' \
+          | sed -e "s/ /,/g"
 
 
     # - name: Execute code analysis
