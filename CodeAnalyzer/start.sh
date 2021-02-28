@@ -13,7 +13,7 @@ DOT_NET=$(which dotnet)
 CODE_ANALYZER="$(pwd -P)/CSharpCodeAnalyzer5.dll"
 RESULT_FILE_CACHE="$(pwd -P)/result.txt"
 RESULT=0
-DIFF=$((git_diff_with_abs_path $1 $2))
+DIFF=$((git_diff_with_abs_path)) $1 $2
 
 for file in $DIFF; do
 	if [ ! -e "$CODE_ANALYZER" ]; then
