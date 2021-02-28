@@ -15,6 +15,10 @@ RESULT_FILE_CACHE="$(pwd -P)/result.txt"
 RESULT=0
 DIFF=$(git_diff_with_abs_path)
 
+echo $CODE_ANALYZER
+if [ ! -e $CODE_ANALYZER ]; then
+	echo "Target file not exist!"
+fi
 for file in $DIFF; do
 	if [ ! -e "$CODE_ANALYZER" ]; then
 	    echo "CodeAnalyzer not exist!"
