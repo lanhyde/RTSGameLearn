@@ -1,8 +1,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ develop ]
   pull_request:
     branches: [ develop ]
 
@@ -12,11 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    
-    - name: Execute code analysis
-      run: ./CodeAnalyzer/start.sh
+    # - name: Setup .NET
+    #   uses: actions/setup-dotnet@v1
+    #   with:
+    #     dotnet-version: 5.0.x
+
+    - name: Checkout target branch
+      uses: actions/checkout@v2
+
+    - name: List Files
+      run: |
+        ls -al
+
+    # - name: Execute code analysis
+    #   run: ./CodeAnalyzer/start.sh
