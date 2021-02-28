@@ -35,4 +35,4 @@ jobs:
 
 
     - name: Execute code analysis
-      run: ./CodeAnalyzer/start.sh origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF
+      run: ./CodeAnalyzer/start.sh origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
