@@ -1,18 +1,20 @@
 #!/bin/sh
 
+ORIGIN=$1
+HEAD=$2
 git_diff_with_abs_path() {
     local path
-    echo $1
-    echo $2
-    path='`$(git rev-parse --show-toplevel) &&
-   git diff $1...$2 --name-only | grep -E ".*(\.cs)$" | sed "s,^,$path/,"`'
+	echo $ORIGIN
+	echo $HEAD
+    path=`$(git rev-parse --show-toplevel) &&
+   git diff $ORIGIN...$HEAD --name-only | grep -E ".*(\.cs)$" | sed "s,^,$path/,"`
 }
 
 DOT_NET=$(which dotnet)
 CODE_ANALYZER="$(pwd -P)/CSharpCodeAnalyzer5.dll"
 RESULT_FILE_CACHE="$(pwd -P)/result.txt"
 RESULT=0
-DIFF=`$(git_diff_with_abs_path) $1 $2`
+DIFF=$(git_diff_with_abs_path)
 
 for file in $DIFF; do
 	echo $file
