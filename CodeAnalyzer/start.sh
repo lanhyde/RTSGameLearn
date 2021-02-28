@@ -4,10 +4,9 @@ ORIGIN=$1
 HEAD=$2
 git_diff_with_abs_path() {
     local path
-	echo $ORIGIN
-	echo $HEAD
-    path=`$(git rev-parse --show-toplevel) &&
-   git diff $ORIGIN...$HEAD --name-only | grep -E ".*(\.cs)$" | sed "s,^,$path/,"`
+
+    path=$(git rev-parse --show-toplevel) &&
+   git diff $ORIGIN...$HEAD --name-only | grep -E ".*(\.cs)$" | sed "s,^,$path/,"
 }
 
 DOT_NET=$(which dotnet)
@@ -17,7 +16,6 @@ RESULT=0
 DIFF=$(git_diff_with_abs_path)
 
 for file in $DIFF; do
-	echo $file
 	if [ ! -e "$CODE_ANALYZER" ]; then
 	    echo "CodeAnalyzer not exist!"
 	    exit 0
@@ -31,5 +29,4 @@ if [ $RESULT -ne 0 ]; then
 	cat $RESULT_FILE_CACHE
 fi
 
-rm $RESULT_FILE_CACHE
 exit $RESULT
