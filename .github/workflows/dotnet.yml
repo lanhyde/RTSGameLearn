@@ -29,7 +29,10 @@ jobs:
           --diff-filter=AM \
           --name-only -- '*.cs' \
           | sed -e "s/ /,/g"
-
+      if: steps.git-diff.outputs.diff
+    - name: Output Result
+      run: |
+        echo ${{ steps.git-diff.outputs.diff }}
 
     # - name: Execute code analysis
     #   run: ./CodeAnalyzer/start.sh
