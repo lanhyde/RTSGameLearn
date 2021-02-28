@@ -28,11 +28,10 @@ jobs:
         git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} \
           --diff-filter=AM \
           --name-only -- '*.cs' \
+        | while read script; do \
+            echo $script \
+          done
 
-    - name: Output Result
-      run: |
-        echo ${{ steps.git-diff.outputs }} | sed -e "s/ /,/g" 
-      if: steps.git-diff.outputs
 
     # - name: Execute code analysis
     #   run: ./CodeAnalyzer/start.sh
