@@ -31,8 +31,8 @@ jobs:
           | sed -e "s/ /,/g"
     - name: Output Result
       run: |
-        echo ${{ steps.git-diff.outputs.diff }}
-      if: steps.git-diff.outputs.diff
+        echo ${{ steps.git-diff.outputs }}
+      if: steps.git-diff.outputs
 
     # - name: Execute code analysis
     #   run: ./CodeAnalyzer/start.sh
