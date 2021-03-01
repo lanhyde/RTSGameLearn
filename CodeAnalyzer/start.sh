@@ -34,5 +34,8 @@ if [ $RESULT -ne 0 ]; then
 	cat $RESULT_FILE_CACHE
 fi
 
-rm $RESULT_FILE_CACHE
+if [ -e $RESULT_FILE_CACHE]; then
+	rm $RESULT_FILE_CACHE
+fi
+
 exit $RESULT
