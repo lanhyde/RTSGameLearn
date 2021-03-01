@@ -15,9 +15,15 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
+    - name: Install LFS
+      run: |
+        git lfs install --system --skip-repo
+    
     - name: Checkout target branch
       uses: actions/checkout@v2
       with:
+        path: ./
+        lfs: true
         fetch-depth: 0
 
     # - name: Check diff
@@ -35,6 +41,5 @@ jobs:
 
 
     - name: Execute code analysis
-      run: |
-        ls -al CodeAnalyzer
+      run: | 
         ./CodeAnalyzer/start.sh origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
