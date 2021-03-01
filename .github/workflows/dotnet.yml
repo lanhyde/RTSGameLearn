@@ -14,7 +14,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-      if: "./CodeAnalyzer/dotnetInstallCheck.sh;rc=$?;1 == $rc"  
+      if: "./CodeAnalyzer/dotnetInstallCheck.sh;rc=$?;0 == $rc"  
     - name: Install LFS
       run: |
         git lfs install --system --skip-repo
