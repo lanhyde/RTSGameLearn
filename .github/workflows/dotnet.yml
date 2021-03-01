@@ -1,27 +1,40 @@
 name: .NET
 
 on:
-  push:
-    branches: [ develop ]
   pull_request:
     branches: [ develop ]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    
+
     - name: Checkout target branch
       uses: actions/checkout@v2
-      with: 
-        ref: ${{ github.event.pull_request.head.sha }}
-    
+      with:
+        fetch-depth: 0
+
+    # - name: Check diff
+    #   id: git-diff
+    #   env:
+    #     EXCLUDE_OPTS: SC2086,SC2001
+    #   run: |
+    #     git rev-parse --show-toplevel
+    #     git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} \
+    #       --diff-filter=AM \
+    #       --name-only -- '*.cs' \
+    #     | while read script; do \
+    #         echo $script \
+    #       done
+
+
     - name: Execute code analysis
-      run: ./CodeAnalyzer/start.sh
+      run: | 
+        ls -al CodeAnalyzer
+        ./CodeAnalyzer/start.sh origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
