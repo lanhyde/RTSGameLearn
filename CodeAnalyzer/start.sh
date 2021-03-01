@@ -6,7 +6,7 @@ git_diff_with_abs_path() {
     local path
 
     path=$(git rev-parse --show-toplevel) &&
-   git diff $ORIGIN...$HEAD --name-only | grep -E ".*(\.cs)$" | sed "s,^,$path/,"
+   git diff $ORIGIN...$HEAD --name-only --diff-filter=AM | grep -E ".*(\.cs)$" | sed "s,^,$path/,"
 }
 
 DOT_NET=$(which dotnet)
