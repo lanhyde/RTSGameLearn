@@ -36,6 +36,6 @@ jobs:
 
     - name: Execute code analysis
       run: | 
-        ls .\deAnalyzer\
+        ls .\CodeAnalyzer\
         dotnet ./CodeAnalyzer/CoreTest.dll
         # ./CodeAnalyzer/start.sh origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
