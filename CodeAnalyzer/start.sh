@@ -19,6 +19,8 @@ echo $CODE_ANALYZER
 if [ ! -e $CODE_ANALYZER ]; then
 	echo "Target file not exist!"
 fi
+
+`$DOTNET $(pwd -P)/CodeAnalyzer/CoreTest.dll`
 for file in $DIFF; do
 	if [ ! -e "$CODE_ANALYZER" ]; then
 	    echo "CodeAnalyzer not exist!"
